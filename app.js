@@ -9,6 +9,17 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+const mongoose = require('mongoose');
+require('dotenv').config();
+
+// Connect to MongoDB
+mongoose.set("strictQuery", false);
+const mongoDB = process.env.MONGODB_URI;
+mongoose.connect(mongoDB)
+  .then(() => console.log('MongoDB connected...'))
+  .catch(err => console.error(err));
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
