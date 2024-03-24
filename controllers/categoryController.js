@@ -33,6 +33,7 @@ exports.category_detail = asyncHandler(async (req, res, next) => {
 });
 
 exports.category_list = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Category list");
+    const categories = await Category.find({}).exec();
+    res.render("category_list", { title: "Category List", categories: categories });
 });
 

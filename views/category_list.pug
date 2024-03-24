@@ -1,0 +1,22 @@
+extends layout 
+block content 
+    div.container
+        div.row
+            div.col-md-12
+                h2 Categories
+                table.table.table-striped
+                    thead
+                        tr
+                            th Name
+                            th Description
+                            th Actions
+                    tbody
+                        each category in categories
+                            tr
+                                td= category.name
+                                td= category.description
+                                td
+                                    a.btn.btn-primary(href="/inventory/category/" + category._id) View
+                                    a.btn.btn-warning(href="/inventory/category/" + category._id + "/update") Edit
+                                    a.btn.btn-danger(href="/inventory/category/" + category._id + "/delete") Delete
+                a.btn.btn-success(href="/inventory/categories/new") Add new category
