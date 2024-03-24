@@ -1,0 +1,29 @@
+extends layout 
+block content 
+    h1= title
+    div.container
+        div.row
+            div.col-md-12
+                h2 Items
+                table.table.table-striped
+                    thead
+                        tr
+                            th Name
+                            th Description
+                            th Category
+                            th Price
+                            th Stock
+                            th Actions
+                    tbody
+                        each item in items
+                            tr
+                                td= item.name
+                                td= item.description
+                                td= item.category.name
+                                td= item.price
+                                td= item.stock
+                                td
+                                    a.btn.btn-primary(href="/inventory/item/" + item._id) View
+                                    a.btn.btn-warning(href="/inventory/item/" + item._id + "/update") Edit
+                                    a.btn.btn-danger(href="/inventory/item/" + item._id + "/delete") Delete
+                a.btn.btn-success(href="/inventory/items/new") Add new item
