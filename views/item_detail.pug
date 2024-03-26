@@ -1,0 +1,23 @@
+extends layout
+
+block content 
+    div.container.content-container
+        div.row
+            div.col-md-12
+                h2 Item
+                table.table.table-striped
+                    thead
+                        tr
+                            th Name
+                            th Description
+                            th Price
+                            th Actions
+                    tbody
+                        tr
+                            td= item.name
+                            td= item.description
+                            td= item.price
+                            td
+                                a.btn.btn-warning(href="/inventory/item/" + item._id + "/update") Edit
+                                a.btn.btn-danger(href="/inventory/item/" + item._id + "/delete") Delete
+                a.btn.btn-success(href="/inventory/items/new") Add new item

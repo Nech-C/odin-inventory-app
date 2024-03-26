@@ -16,3 +16,7 @@ a {
 .count-container a {
   margin-left: 10px;
 }
+
+.content-container {
+  margin-top: 40px;
+}
