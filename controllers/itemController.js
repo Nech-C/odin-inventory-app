@@ -31,7 +31,8 @@ exports.item_detail = asyncHandler(async (req, res, next) => {
 });
 
 exports.item_create_get = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Item create GET");
+    const categories = await Category.find().exec();
+    res.render("item_form", { title: "Create Item", categories: categories });
 });
 
 exports.item_create_post = asyncHandler(async (req, res, next) => {
