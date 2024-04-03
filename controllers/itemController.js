@@ -35,9 +35,60 @@ exports.item_create_get = asyncHandler(async (req, res, next) => {
     res.render("item_form", { title: "Create Item", categories: categories });
 });
 
-exports.item_create_post = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Item create POST");
-});
+exports.item_create_post = [
+    body("name")
+        .trim()
+        .isLength({ min: 1 })
+        .escape()
+        .withMessage("Name must be specified.")
+        .isAlphanumeric()
+        .withMessage("Name has non-alphanumeric characters."),
+    body("description")
+        .trim()
+        .isLength({ min: 1 })
+        .escape()
+        .withMessage("Description must be specified.")
+        .isAlphanumeric()
+        .withMessage("Description has non-alphanumeric characters."),
+    body("category")
+        .isLength({ min: 1 })
+        .escape()
+        .withMessage("Category must be specified.")
+        .isAlphanumeric()
+        .withMessage("Category has non-alphanumeric characters."),
+    body("price")
+        .isNumeric()
+        .escape()
+        .withMessage("Price must be a number."),
+    body("stock")
+        .isNumeric()
+        .escape()
+        .withMessage("Stock must be a number."),
+    asyncHandler(async (req, res, next) => {
+        const errors = validationResult(req);
+        const categories = await Category.find().exec();
+        const item = new Item({
+            name: req.body.name,
+            description: req.body.description,
+            category: req.body.category,
+            price: req.body.price,
+            num_in_stock: req.body.stock,
+        });
+
+        if (!errors.isEmpty()) {
+            res.render("item_form", {
+                title: "Create Item",
+                item: item,
+                categories: categories,
+                errors: errors.array(),
+            });
+            return;
+        } else {
+            await item.save();
+            res.redirect(item.url);
+        }
+    })
+]
 
 exports.item_update_get = asyncHandler(async (req, res, next) => {
     res.send("NOT IMPLEMENTED: Item update GET");
