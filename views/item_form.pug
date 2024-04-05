@@ -1,7 +1,7 @@
 extends layout 
 block content 
     h1= title
-    form(method='POST' action='/inventory/item/create')
+    form(method='POST')
         div.form-group
         label(for='name') Name:
         input#name.form-control(type='text' name='name' value=( undefined === item ? '' : item.name) required)
