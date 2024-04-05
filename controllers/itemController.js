@@ -59,11 +59,15 @@ exports.item_create_post = [
     body("price")
         .isNumeric()
         .escape()
-        .withMessage("Price must be a number."),
+        .withMessage("Price must be a number.")
+        .custom((value) => value > 0)
+        .withMessage("Price must be greater than 0."),
     body("stock")
         .isNumeric()
         .escape()
-        .withMessage("Stock must be a number."),
+        .withMessage("Stock must be a number.")
+        .custom((value) => value >= 0)
+        .withMessage("Stock must be greater than or equal to 0."),
     asyncHandler(async (req, res, next) => {
         const errors = validationResult(req);
         const categories = await Category.find().exec();
@@ -74,6 +78,9 @@ exports.item_create_post = [
             price: req.body.price,
             num_in_stock: req.body.stock,
         });
+
+        console.log(item);
+        console.log(item.category)
 
         if (!errors.isEmpty()) {
             res.render("item_form", {

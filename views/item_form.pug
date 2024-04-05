@@ -4,21 +4,25 @@ block content
     form(method='POST' action='/inventory/item/create')
         div.form-group
         label(for='name') Name:
-        input#name.form-control(type='text' name='name' required)
+        input#name.form-control(type='text' name='name' value=( undefined === item ? '' : item.name) required)
         div.form-group
         label(for='description') Description:
-        textarea#description.form-control(name='description' required)
+        textarea#description.form-control(name='description' required) 
+            = ( undefined === item ? '' : item.description)
         div.form-group
         label(for='category') Category:
         select#category.form-control(name='category' required)
             each category in categories
-                option(value=category._id)= category.name
+                if category._id.toString() == item.category.toString()
+                    option(value=category._id selected)= category.name
+                else 
+                    option(value=category._id)= category.name
         div.form-group
         label(for='price') Price:
-        input#price.form-control(type='number' name='price' required)
+        input#price.form-control(type='number' name='price' step='any' value=( undefined === item ? 0.00 : item.price ) required)
         div.form-group
         label(for='stock') Stock:
-        input#stock.form-control(type='number' name='stock' required)
+        input#stock.form-control(type='number' name='stock' value=( undefined === item ? 0 : item.num_in_stock ) required)
         button.btn.btn-primary(type='submit') Submit
     
     .errors 
