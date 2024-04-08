@@ -1,0 +1,12 @@
+extends layout 
+block content 
+    h1= title
+    form(method='POST')
+        .form-group
+            label(for='category_name') Category Name:
+            input#category_name.form-control(type='text', name='category_name')
+        .form-group 
+            label(for='category_description') Description: 
+            input#category_description.form-control(type='text', name='category_description')
+
+        button.btn.btn-primary(type='submit') Submit

@@ -5,12 +5,10 @@ const { body, validationResult } = require("express-validator");
 
 
 exports.category_create_get = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Category create GET");
+    res.render("category_form", {title: "Create Category"});
 });
 
-exports.category_create_post = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Category create POST");
-});
+exports.category_create_post = [];
 
 exports.category_delete_get = asyncHandler(async (req, res, next) => {
     res.send("NOT IMPLEMENTED: Category delete GET");
