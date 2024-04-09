@@ -5,8 +5,16 @@ block content
         .form-group
             label(for='category_name') Category Name:
             input#category_name.form-control(type='text', name='category_name')
+            = ( undefined === category ? '' : category.name)
         .form-group 
             label(for='category_description') Description: 
             input#category_description.form-control(type='text', name='category_description')
+            = ( undefined === category ? '' : category.description)
 
         button.btn.btn-primary(type='submit') Submit
+    
+    .errors
+        if errors
+            ul
+                each error in errors
+                    li= error.msg
