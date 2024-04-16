@@ -1,0 +1,14 @@
+extends layout 
+block content 
+    h1= title 
+    form(method='POST')
+        if itemsInCategory.length
+            p This category contains the following items. Delete the items before deleting the category:
+            ul
+                each item in itemsInCategory
+                    li
+                        a(href=item.url)= item.name
+        else
+            p Are you sure you want to delete this category?
+            button.btn.btn-danger(type='submit') Delete
+            a.btn.btn-secondary(href='/inventory/categories') Cancel
