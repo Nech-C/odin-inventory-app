@@ -9,7 +9,7 @@ const CategorySchema = new Schema({
 
 // Virtual for category's URL
 CategorySchema.virtual("url").get(function () {
-    return `/category/${this._id}`;
+    return `/inventory/category/${this._id}`;
 });
 
 
