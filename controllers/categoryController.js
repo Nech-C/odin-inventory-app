@@ -77,7 +77,12 @@ exports.category_update_post = asyncHandler(async (req, res, next) => {
 });
 
 exports.category_detail = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Category detail");
+    const category = await Category.findById(req.params.id).exec();
+    if (category === null) {
+        res.redirect("/inventory/categories");
+    }
+    const itemsInCategory = await Item.find({ category: req.params.id }).exec();
+    res.render("category_detail", { title: "Category Detail", category: category, itemsInCategory: itemsInCategory });
 });
 
 exports.category_list = asyncHandler(async (req, res, next) => {
