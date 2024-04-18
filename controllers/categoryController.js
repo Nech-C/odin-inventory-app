@@ -69,12 +69,49 @@ exports.category_delete_post = asyncHandler(async (req, res, next) => {
 });
 
 exports.category_update_get = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Category update GET");
+    const category = await Category.findById(req.params.id).exec();
+    if (category === null) {
+        res.redirect("/inventory/categories");
+    }
+    res.render("category_form", { title: "Update Category", category: category });
 });
 
-exports.category_update_post = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Category update POST");
-});
+exports.category_update_post = [
+    body("category_name")
+        .trim()
+        .isLength({ min: 1 })
+        .escape()
+        .withMessage("Category name must be specified.")
+        .isAlphanumeric()
+        .withMessage("Category name has non-alphanumeric characters."),
+    body("category_description")
+        .trim()
+        .isLength({ min: 1 })
+        .escape()
+        .withMessage("Category description must be specified.")
+        .isAlphanumeric()
+        .withMessage("Category description has non-alphanumeric characters."),
+    asyncHandler(async (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            res.render("category_form", {
+                title: "Update Category",
+                category_name: req.body.category_name,
+                category_description: req.body.category_description,
+                errors: errors.array(),
+            });
+            return;
+        } else {
+            const category = new Category({
+                name: req.body.category_name,
+                description: req.body.category_description,
+                _id: req.params.id,
+            });
+            await Category.findByIdAndUpdate(req.params.id, category, {}).exec();
+            res.redirect(category.url);
+        }
+    })
+];
 
 exports.category_detail = asyncHandler(async (req, res, next) => {
     const category = await Category.findById(req.params.id).exec();
